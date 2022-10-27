@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: "If you find our approach interesting for your own research, please cite the corresponding paper."
+authors:
+  - family-names: Schrodi
+    given-names: Simon
+  - family-names: Stoll
+    given-names: Danny
+  - family-names: Ru
+    given-names: Binxin
+  - family-names: Sukthanker
+    given-names: Rhea
+  - family-names: Brox
+    given-names: Thomas
+  - family-names: Hutter
+    given-names: Frank
+title: "Towards Neural Architecture Search from Scratch"
+version: 0.1.0
+date-released: 2022-10-28
+url: "https://github.com/automl/towards_nas_from_scratch"
+preferred-citation:
+  type: article
+  authors:
+  - family-names: Schrodi
+    given-names: Simon
+  - family-names: Stoll
+    given-names: Danny
+  - family-names: Ru
+    given-names: Binxin
+  - family-names: Sukthanker
+    given-names: Rhea
+  - family-names: Brox
+    given-names: Thomas
+  - family-names: Hutter
+    given-names: Frank
+  title: "Towards Neural Architecture Search from Scratch"
+  journal: arXiv
+  year: 2022

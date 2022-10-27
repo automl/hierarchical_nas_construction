@@ -1,0 +1,25 @@
+# Python
+__pycache__
+
+# slurm scripts
+slurm_scripts/*
+
+
+# IDE related
+.vscode/
+.idea/
+
+# Latex
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
+*.dpth
+*.md5
+*.dep
+*.auxlock
+*.snm
+*.out
+*.nav
+*.toc
