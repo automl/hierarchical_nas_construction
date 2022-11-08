@@ -1,7 +1,7 @@
 # Towards Neural Architecture Search from Scratch
 This repository contains the implementation of our paper "Towards Neural Architecture Search from Scratch",
 a search space design framework expressing neural architectures algebraically that are constructed by context-free grammars.
-For more details, please refer to [our paper](TODO).
+For more details, please refer to [our paper](https://arxiv.org/abs/2211.01842).
 
 ## 1. Installation
 1. Clone this repository.
