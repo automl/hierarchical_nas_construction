@@ -145,7 +145,7 @@ if not args.DEBUG:
 idx = args.search_space.find("_")
 dataset = args.objective[args.objective.find("_") + 1 :]
 search_space = SearchSpaceMapping[args.search_space[:idx]](
-    space=args.search_space[idx + 1 :], dataset=dataset, adjust_params=False
+    space=args.search_space[idx + 1 :], dataset=dataset,
 )
 search_space = SearchSpace(**{"architecture": search_space})
 

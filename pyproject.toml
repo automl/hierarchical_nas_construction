@@ -12,6 +12,10 @@ authors = [
 ]
 readme = "README.md"
 license = "MIT"
+packages = [
+    { include = "benchmarks" },
+    { include = "experiments" },
+]
 
 [tool.poetry.dependencies]
 python = ">=3.7.1,<3.8"
