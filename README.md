@@ -1,6 +1,6 @@
 # Towards Neural Architecture Search from Scratch
 This repository contains the implementation of our paper "Towards Neural Architecture Search from Scratch",
-a search space design framework expressing neural architectures algebraically that are constructed by context-free grammars.
+that treats neural architectures as algebraic terms and implements the construction mechanism of algebraic terms with context-free grammars.
 For more details, please refer to [our paper](https://arxiv.org/abs/2211.01842).
 
 ## 1. Installation
@@ -27,8 +27,8 @@ bash install_dev_utils/poetry.sh
 4. Run `poetry install` (this can take quite a while) and then run `pip install opencv-python`.
 
 ## 2. Reproducing the paper results
-### Search
-To reproduce our search experiments, run
+### 2.1 Search on the cell-based or hierarchical NAS-Bench-201 search space
+To reproduce those search experiments, run
 
 ```bash
 python experiments/optimize.py \
@@ -45,7 +45,7 @@ python experiments/optimize.py \
 --log \
 --p_self_crossover 0.5
 ```
-where you set `$working_directory` and `$data_path` to the directory you want to save to or the path to the dataset, respectively. The other variables can be set as follows:
+where `$working_directory` and `$data_path` are the directory you want to save to or the path to the dataset, respectively. The other variables can be set as follows:
 | variable          | options                                                       |
 |--------------------------|-------------------------------------------------------------------|
 | `search_space`         | `nb201_variable_multi_multi` (hierarchical) or `nb201_fixed_1_none` (cell-based)     |
@@ -54,8 +54,36 @@ where you set `$working_directory` and `$data_path` to the directory you want to
 | `surrogate_model`       | `gp_hierarchical` (hWL) or `gp` (WL) (only activate if `searcher` is set to `bayesian_optimization`) |
 | `seed`      | `777`, `888`, `999`                     |
 
-### Surrogate experiments
+### 2.2 Search on the activation function search space
+To reproduce this search experiment, run
+
+```bash
+python experiments/optimize.py \
+--working_directory $working_directory \
+--data_path $data_path \
+--search_space act_cifar10 \
+--objective act_cifar10 \
+--searcher $searcher \
+--surrogate_model $surrogate_model \
+--seed $seed \
+--pool_strategy evolution \
+--pool_size 200 \
+--n_init 50 \
+--log \
+--p_self_crossover 0.5 \
+--max_evaluations_total 1000
+```
+where `$working_directory` and `$data_path` are the directory you want to save to or the path to the dataset, respectively.
+The other variables can be set as follows:
+| variable          | options                                                       |
+|--------------------------|-------------------------------------------------------------------|
+| `searcher`      | `bayesian_optimization`, `random search`, or `regularized_evolution`     |
+| `surrogate_model`       | `gp_hierarchical` (hWL) or `gp` (WL) (only activate if `searcher` is set to `bayesian_optimization`) |
+| `seed`      | `777`, `888`, `999` (note that we only ran on the seed `777` in our experiments)                    |
+
+### 2.3 Surrogate experiments
 **Search has to be run beforehand or data needs to be provided!**
+
 To reproduce our surrogate experiments, run
 
 ```bash
@@ -67,7 +95,7 @@ python experiments/surrogate_regression.py \
 --n_train $n_train \
 --log
 ```
-where you set `$working_directory` is the directory where the data from the search runs have been saved to and the results will be saved to. The other variables can be set as follows:
+where `$working_directory` is the directory where the data from the search runs has been saved to and the surrogate results will be saved to. Other variables can be set as follows:
 | variable          | options                                                       |
 |--------------------------|-------------------------------------------------------------------|
 | `search_space`         | `nb201_variable_multi_multi` (hierarchical) or `nb201_fixed_1_none` (cell-based)     |
@@ -77,7 +105,7 @@ where you set `$working_directory` is the directory where the data from the sear
 
 ## 3. Citing
 If you would like to learn more about our work, please read our [paper](https://arxiv.org/abs/2211.01842).
-If you find our approach interesting for your own work, please cite the corresponding paper:
+If you find our approach interesting for your own work, please cite the paper:
 ```
 @misc{Schrodi_Towards_Neural_Architecture_2022,
   doi = {10.48550/ARXIV.2211.01842},
