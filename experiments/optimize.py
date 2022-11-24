@@ -9,9 +9,11 @@ from functools import partial
 import neps
 import numpy as np
 import torch
+from hierarchical_nas_benchmarks.objectives.cifar_activation import CIFAR10ActivationObjective
 from benchmarks.objectives.addNIST import AddNISTObjective
 from benchmarks.objectives.cifarTile import CifarTileObjective
 from benchmarks.objectives.hierarchical_nb201 import NB201Pipeline
+from hierarchical_nas_benchmarks.search_spaces.activation_function_search.graph import ActivationSpace
 from benchmarks.search_spaces.hierarchical_nb201.graph import (
     NB201_HIERARCHIES_CONSIDERED,
     NB201Spaces,
@@ -30,9 +32,11 @@ from path import Path
 
 SearchSpaceMapping = {
     "nb201": NB201Spaces,
+    "act": partial(ActivationSpace, base_architecture="resnet20"),
 }
 
 hierarchies_considered_in_search_space = {**NB201_HIERARCHIES_CONSIDERED}
+hierarchies_considered_in_search_space["act_cifar10"] = [0, 1, 2]
 
 
 def run_debug_pipeline(architecture):
@@ -51,6 +55,7 @@ def run_debug_pipeline(architecture):
 
 
 ObjectiveMapping = {
+    "act_cifar10": partial(CIFAR10ActivationObjective, dataset="cifar10"),
     "nb201_addNIST": AddNISTObjective,
     "nb201_cifarTile": CifarTileObjective,
     "nb201_cifar10": partial(NB201Pipeline, dataset="cifar10"),
@@ -64,7 +69,6 @@ parser.add_argument(
     "--search_space",
     default="nb201",
     help="The benchmark dataset to run the experiments.",
-    # choices=SearchSpaceMapping.keys(),
 )
 parser.add_argument(
     "--objective",
@@ -166,22 +170,29 @@ working_dir.makedirs_p()
 with open(working_dir / "args.json", "w") as f:
     json.dump(args.__dict__, f, indent=4)
 
-if "nb201_" in args.objective:
+if "nb201_" in args.objective or "act_" in args.objective:
     run_pipeline_fn = ObjectiveMapping[args.objective](
         data_path=args.data_path, seed=args.seed, log_scale=args.log
     )
     idx = args.search_space.find("_")
     dataset = args.objective[args.objective.find("_") + 1 :]
+    search_space_key = args.search_space[:idx]
     if args.surrogate_model == "gp_hierarchical" or args.surrogate_model == "gp":
-        search_space = SearchSpaceMapping[args.search_space[:idx]](
-            space=args.search_space[idx + 1 :], dataset=dataset,
-        )
+        if "nb201_" in args.objective:
+            search_space = SearchSpaceMapping[search_space_key](
+                space=args.search_space[idx + 1 :], dataset=dataset,
+            )
+        elif "act_" in args.objective:
+            search_space = SearchSpaceMapping[search_space_key](dataset=dataset)
     else:
-        search_space = SearchSpaceMapping[args.search_space[:idx]](
-            space=args.search_space[idx + 1 :],
-            dataset=dataset,
-            return_graph_per_hierarchy=False,
-        )
+        if "nb201_" in args.objective:
+            search_space = SearchSpaceMapping[search_space_key](
+                space=args.search_space[idx + 1 :],
+                dataset=dataset,
+                return_graph_per_hierarchy=False,
+            )
+        elif "act_" in args.objective:
+            search_space = SearchSpaceMapping[search_space_key](dataset=dataset, return_graph_per_hierarchy=False)
 elif "debug" == args.objective:
     run_pipeline_fn = ObjectiveMapping[args.objective]
     idx = args.search_space.find("_")
