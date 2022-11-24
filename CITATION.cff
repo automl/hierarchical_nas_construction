@@ -13,7 +13,7 @@ authors:
     given-names: Thomas
   - family-names: Hutter
     given-names: Frank
-title: "Towards Neural Architecture Search from Scratch"
+title: "Towards Discovering Neural Architectures from Scratch"
 version: 0.1.0
 date-released: 2022-11-03
 url: "https://github.com/automl/towards_nas_from_scratch"
@@ -35,7 +35,7 @@ preferred-citation:
   - family-names: Hutter
     given-names: Frank
   keywords: "Machine Learning (cs.LG), Artificial Intelligence (cs.AI), Computer Vision and Pattern Recognition (cs.CV), Machine Learning (stat.ML), FOS: Computer and information sciences, FOS: Computer and information sciences"
-  title: "Towards Neural Architecture Search from Scratch"
+  title: "Towards Discovering Neural Architectures from Scratch"
   publisher: arXiv
   year: 2022
   copyright: "arXiv.org perpetual, non-exclusive license"
