@@ -1,5 +1,5 @@
-# Towards Neural Architecture Search from Scratch
-This repository contains the implementation of our paper "Towards Neural Architecture Search from Scratch",
+# Towards Discovering Neural Architectures from Scratch
+This repository contains the implementation of our paper "Towards Discovering Neural Architectures from Scratch",
 that treats neural architectures as algebraic terms and implements the construction mechanism of algebraic terms with context-free grammars.
 For more details, please refer to [our paper](https://arxiv.org/abs/2211.01842).
 
