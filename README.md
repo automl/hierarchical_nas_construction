@@ -51,7 +51,7 @@ where `$working_directory` and `$data_path` are the directory you want to save t
 | `search_space`         | `nb201_variable_multi_multi` (hierarchical) or `nb201_fixed_1_none` (cell-based)     |
 | `objective` | `nb201_cifar10`, `nb201_cifar100`, `nb201_ImageNet16-120`, `nb201_cifarTile`, or `nb201_addNIST`   |
 | `searcher`      | `bayesian_optimization`, `random search`, or `regularized_evolution`     |
-| `surrogate_model`       | `gp_hierarchical` (hWL) or `gp` (WL) (only activate if `searcher` is set to `bayesian_optimization`) |
+| `surrogate_model`       | `gp_hierarchical` (hWL) or `gp` (WL) (only active if `searcher` is set to `bayesian_optimization`) |
 | `seed`      | `777`, `888`, `999`                     |
 
 ### 2.2 Search on the activation function search space
@@ -78,7 +78,7 @@ The other variables can be set as follows:
 | variable          | options                                                       |
 |--------------------------|-------------------------------------------------------------------|
 | `searcher`      | `bayesian_optimization`, `random search`, or `regularized_evolution`     |
-| `surrogate_model`       | `gp_hierarchical` (hWL) or `gp` (WL) (only activate if `searcher` is set to `bayesian_optimization`) |
+| `surrogate_model`       | `gp_hierarchical` (hWL) or `gp` (WL) (only active if `searcher` is set to `bayesian_optimization`) |
 | `seed`      | `777`, `888`, `999` (note that we only ran on the seed `777` in our experiments)                    |
 
 ### 2.3 Surrogate experiments
@@ -100,7 +100,7 @@ where `$working_directory` is the directory where the data from the search runs 
 |--------------------------|-------------------------------------------------------------------|
 | `search_space`         | `nb201_variable_multi_multi` (hierarchical) or `nb201_fixed_1_none` (cell-based)     |
 | `objective` | `nb201_cifar10`, `nb201_cifar100`, `nb201_ImageNet16-120`, `nb201_cifarTile`, or `nb201_addNIST`   |
-| `surrogate_model`       | `gp_hierarchical` (hWL) or `gp` (WL) (only activate if `searcher` is set to `bayesian_optimization`) |
+| `surrogate_model`       | `gp_hierarchical` (hWL) or `gp` (WL) (only active if `searcher` is set to `bayesian_optimization`) |
 | `n_train`      | `10`, `25`, `50`, `75`, `100`, `150`, `200`, `300`, or `400`                     |
 
 ## 3. Citing
