@@ -55,6 +55,8 @@ def read_data(
                 "bug" in s
                 or (rs_only and "random_search" != f)
                 or ("fixed_1_none" in str(working_directory) and "gp_evo" in f)
+                or not os.path.isdir(working_directory / f / s)
+                or "naswot" in f
             ):
                 continue
             results_dir = working_directory / f / s / "results"
