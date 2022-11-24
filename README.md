@@ -107,7 +107,7 @@ where `$working_directory` is the directory where the data from the search runs 
 If you would like to learn more about our work, please read our [paper](https://arxiv.org/abs/2211.01842).
 If you find our approach interesting for your own work, please cite the paper:
 ```
-@misc{Schrodi_Towards_Neural_Architecture_2022,
+@misc{Schrodi_Towards_Discovering_Neural_2022,
   doi = {10.48550/ARXIV.2211.01842},
   url = {https://arxiv.org/abs/2211.01842},
   author = {Schrodi, Simon and Stoll, Danny and Ru, Binxin and Sukthanker, Rhea and Brox, Thomas and Hutter, Frank},
