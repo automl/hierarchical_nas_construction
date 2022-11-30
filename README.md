@@ -123,6 +123,7 @@ Other variables can be set as follows:
 | `search_space`         | `nb201_variable_multi_multi` (hierarchical) or `nb201_fixed_1_none` (cell-based)     |
 | `objective` | `nb201_cifar10`, `nb201_cifar100`, `nb201_ImageNet16-120`, `nb201_cifarTile`, or `nb201_addNIST`   |
 
+### 2.5 NASWOT search experiment
 To reproduce the NASWOT search experiment, run
 ```bash
 python experiments/optimize_naswot.py \
