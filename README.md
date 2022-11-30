@@ -103,6 +103,43 @@ where `$working_directory` is the directory where the data from the search runs 
 | `surrogate_model`       | `gp_hierarchical` (hWL) or `gp` (WL) (only active if `searcher` is set to `bayesian_optimization`) |
 | `n_train`      | `10`, `25`, `50`, `75`, `100`, `150`, `200`, `300`, or `400`                     |
 
+### 2.4 Zero-cost proxy experiments
+**Search has to be run beforehand or data needs to be provided!**
+
+To reproduce our zero-cost proxy rank correlation experiments, run
+
+```bash
+python experiments/zero_cost_proxy_rank_correlation.py \
+--working_directory $working_directory \
+--search_space $search_space \
+--objective $objective \
+--data_path $data_path \
+--log
+```
+where `$working_directory` and `$data_path` are the directory you want to save to and the data from the search runs has been saved to or the path to the dataset, respectively.
+Other variables can be set as follows:
+| variable          | options                                                       |
+|--------------------------|-------------------------------------------------------------------|
+| `search_space`         | `nb201_variable_multi_multi` (hierarchical) or `nb201_fixed_1_none` (cell-based)     |
+| `objective` | `nb201_cifar10`, `nb201_cifar100`, `nb201_ImageNet16-120`, `nb201_cifarTile`, or `nb201_addNIST`   |
+
+To reproduce the NASWOT search experiment, run
+```bash
+python experiments/optimize_naswot.py \
+--working_directory $working_directory \
+--search_space $search_space \
+--objective $objective \
+--data_path $data_path \
+--seed $seed \
+--naslib
+```
+where `$working_directory` and `$data_path` are the directory you want to save to or the path to the dataset, respectively. The other variables can be set as follows:
+| variable          | options                                                       |
+|--------------------------|-------------------------------------------------------------------|
+| `search_space`         | `nb201_variable_multi_multi` (hierarchical) or `nb201_fixed_1_none` (cell-based)     |
+| `objective` | `nb201_cifar10`, `nb201_cifar100`, `nb201_ImageNet16-120`, `nb201_cifarTile`, or `nb201_addNIST`   |
+| `seed`      | `777`, `888`, `999`                     |
+
 ## 3. Citing
 If you would like to learn more about our work, please read our [paper](https://arxiv.org/abs/2211.01842).
 If you find our approach interesting for your own work, please cite the paper:

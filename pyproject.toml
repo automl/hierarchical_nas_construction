@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "Towards Neural Architecture Search from Scratch"
+name = "Towards Discovering Neural Architectures Scratch"
 version = "0.1.0"
 description = "This work proposes an algebraic notion of neural architecture search."
 authors = [
