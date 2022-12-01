@@ -9,11 +9,11 @@ from functools import partial
 import neps
 import numpy as np
 import torch
-from hierarchical_nas_benchmarks.objectives.cifar_activation import CIFAR10ActivationObjective
+from benchmarks.objectives.cifar_activation import CIFAR10ActivationObjective
 from benchmarks.objectives.addNIST import AddNISTObjective
 from benchmarks.objectives.cifarTile import CifarTileObjective
 from benchmarks.objectives.hierarchical_nb201 import NB201Pipeline
-from hierarchical_nas_benchmarks.search_spaces.activation_function_search.graph import ActivationSpace
+from benchmarks.search_spaces.activation_function_search.graph import ActivationSpace
 from benchmarks.search_spaces.hierarchical_nb201.graph import (
     NB201_HIERARCHIES_CONSIDERED,
     NB201Spaces,

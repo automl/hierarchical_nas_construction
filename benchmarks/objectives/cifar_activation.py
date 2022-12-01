@@ -6,9 +6,9 @@ from torchvision import transforms, datasets
 from torch.cuda.amp import GradScaler
 from copy import deepcopy
 
-from hierarchical_nas_benchmarks.evaluation.objective import Objective
+from benchmarks.evaluation.objective import Objective
 
-from hierarchical_nas_benchmarks.objectives.custom_nb201.evaluate_utils import (
+from benchmarks.objectives.custom_nb201.evaluate_utils import (
     AverageMeter,
     obtain_accuracy,
     prepare_seed,
@@ -261,8 +261,8 @@ if __name__ == "__main__":
     import json
     from path import Path
     from neps.search_spaces.search_space import SearchSpace
-    from hierarchical_nas_benchmarks.search_spaces.activation_function_search.graph import ActivationSpace, PRIMITIVES
-    import hierarchical_nas_benchmarks.search_spaces.activation_function_search.cifar_models as cifar_models
+    from benchmarks.search_spaces.activation_function_search.graph import ActivationSpace
+    import benchmarks.search_spaces.activation_function_search.cifar_models as cifar_models
 
     parser = argparse.ArgumentParser(description="Train")
     parser.add_argument(

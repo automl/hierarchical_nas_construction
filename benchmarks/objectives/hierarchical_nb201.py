@@ -529,15 +529,15 @@ if __name__ == "__main__":
     from torch.utils.tensorboard import SummaryWriter
     from tqdm import tqdm
 
-    from hierarchical_nas_benchmarks.objectives.apis.nasbench201 import NAS201
-    from hierarchical_nas_benchmarks.objectives.custom_nb201.genotypes import (
+    from benchmarks.objectives.apis.nasbench201 import NAS201
+    from benchmarks.objectives.custom_nb201.genotypes import (
         Structure as CellStructure,
     )
-    from hierarchical_nas_benchmarks.objectives.custom_nb201.tiny_network import (
+    from benchmarks.objectives.custom_nb201.tiny_network import (
         TinyNetwork,
     )
-    from hierarchical_nas_benchmarks.objectives.nasbench201 import NasBench201Objective
-    from hierarchical_nas_benchmarks.search_spaces.hierarchical_nb201.graph import (
+    from benchmarks.objectives.nasbench201 import NasBench201Objective
+    from benchmarks.search_spaces.hierarchical_nb201.graph import (
         NB201Spaces,
     )
 

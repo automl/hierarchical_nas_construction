@@ -12,9 +12,9 @@ from statistics import mean
 
 import numpy as np
 import torch
-from hierarchical_nas_benchmarks.evaluation.utils import get_train_val_test_loaders
-from hierarchical_nas_benchmarks.objectives.hierarchical_nb201 import get_dataloaders
-from hierarchical_nas_benchmarks.search_spaces.hierarchical_nb201.graph import (
+from benchmarks.evaluation.utils import get_train_val_test_loaders
+from benchmarks.objectives.hierarchical_nb201 import get_dataloaders
+from benchmarks.search_spaces.hierarchical_nb201.graph import (
     NB201_HIERARCHIES_CONSIDERED,
     NB201Spaces,
 )
@@ -23,7 +23,7 @@ from neps.search_spaces.search_space import SearchSpace
 from path import Path
 from tqdm import trange
 
-from hierarchical_nas_experiments.zero_cost_proxies import ZeroCost, evaluate
+from experiments.zero_cost_proxies import ZeroCost, evaluate
 
 SearchSpaceMapping = {
     "nb201": NB201Spaces,

@@ -15,14 +15,14 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 import yaml
-from hierarchical_nas_benchmarks.evaluation.utils import get_train_val_test_loaders
-from hierarchical_nas_benchmarks.objectives.addNIST import AddNISTObjective
-from hierarchical_nas_benchmarks.objectives.cifarTile import CifarTileObjective
-from hierarchical_nas_benchmarks.objectives.hierarchical_nb201 import (
+from benchmarks.evaluation.utils import get_train_val_test_loaders
+from benchmarks.objectives.addNIST import AddNISTObjective
+from benchmarks.objectives.cifarTile import CifarTileObjective
+from benchmarks.objectives.hierarchical_nb201 import (
     NB201Pipeline,
     get_dataloaders,
 )
-from hierarchical_nas_benchmarks.search_spaces.hierarchical_nb201.graph import (
+from benchmarks.search_spaces.hierarchical_nb201.graph import (
     NB201_HIERARCHIES_CONSIDERED,
     NB201Spaces,
 )
@@ -32,11 +32,11 @@ from scipy import stats
 from torch import nn
 from torch.utils.data import DataLoader
 
-from hierarchical_nas_experiments.zero_cost_proxies_utils import calc_measure
-from hierarchical_nas_experiments.zero_cost_proxies_utils.model_stats import (
+from experiments.zero_cost_proxies_utils import calc_measure
+from experiments.zero_cost_proxies_utils.model_stats import (
     get_model_stats,
 )
-from hierarchical_nas_experiments.zero_cost_proxies_utils.p_utils import (
+from experiments.zero_cost_proxies_utils.p_utils import (
     get_some_data,
     get_some_data_grasp,
 )

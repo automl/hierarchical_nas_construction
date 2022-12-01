@@ -11,11 +11,11 @@ from torchvision import models
 import torch
 from torch import nn
 
-import hierarchical_nas_benchmarks.search_spaces.activation_function_search.unary_operations as UnaryOp
-from hierarchical_nas_benchmarks.search_spaces.activation_function_search.stacking import Stacking
-import hierarchical_nas_benchmarks.search_spaces.activation_function_search.kvary_operations as BinaryOp
-from hierarchical_nas_benchmarks.search_spaces.activation_function_search.topologies import BinaryTopo
-import hierarchical_nas_benchmarks.search_spaces.activation_function_search.cifar_models as cifar_models
+import benchmarks.search_spaces.activation_function_search.unary_operations as UnaryOp
+from benchmarks.search_spaces.activation_function_search.stacking import Stacking
+import benchmarks.search_spaces.activation_function_search.kvary_operations as BinaryOp
+from benchmarks.search_spaces.activation_function_search.topologies import BinaryTopo
+import benchmarks.search_spaces.activation_function_search.cifar_models as cifar_models
 
 DIR_PATH = Path(os.path.dirname(os.path.realpath(__file__)))
 
