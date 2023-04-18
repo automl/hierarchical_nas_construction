@@ -16,7 +16,8 @@ def prepare_seed(rand_seed: int, workers: int = 4):
     torch.backends.cudnn.enabled = True
     torch.backends.cudnn.deterministic = True
     # torch.backends.cudnn.benchmark = True
-    torch.set_num_threads(workers)
+    if workers > 0:
+        torch.set_num_threads(workers)
     random.seed(rand_seed)
     np.random.seed(rand_seed)
     torch.manual_seed(rand_seed)

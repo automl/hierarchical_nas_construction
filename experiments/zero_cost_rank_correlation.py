@@ -10,6 +10,7 @@ import types
 from copy import deepcopy
 from functools import partial
 from pathlib import Path
+from typing import Callable
 
 import numpy as np
 import torch
@@ -247,7 +248,10 @@ class ZeroCost(Predictor):
 
     def query(self, graph, dataloader=None, info=None):  # pylint: disable=unused-argument
         # loss_fn = graph.get_loss_fn()
-        loss_fn = self.loss_fn()
+        if self.loss_fn is not None:
+            loss_fn = self.loss_fn()
+        else:
+            loss_fn = None
 
         # n_classes = graph.num_classes
         n_classes = self.n_classes
@@ -294,14 +298,19 @@ class ModelBeforeGlobalAvgPool(nn.Module):
         return features
 
 
-def evaluate(zc_proxy, x_graphs, loader):
+def evaluate(zc_proxy, x, loader, extract_model: Callable = None):
     zc_proxy.pre_process()
     test_pred = []
-    for graph in x_graphs:
-        if "zen" == zc_proxy.method_type:
-            pred = zc_proxy.query(ModelBeforeGlobalAvgPool(deepcopy(graph)), loader)
+    for x_ in x:
+        if extract_model is not None:
+            model = extract_model(x_)
         else:
-            pred = zc_proxy.query(graph, loader)
+            model = deepcopy(x_)
+
+        if "zen" == zc_proxy.method_type:
+            pred = zc_proxy.query(ModelBeforeGlobalAvgPool(deepcopy(model)), loader)
+        else:
+            pred = zc_proxy.query(model, loader)
         if float("-inf") == pred:
             pred = -1e9
         elif float("inf") == pred:
@@ -545,7 +554,7 @@ if __name__ == "__main__":
         zc_proxy = ZeroCost(method_type=method_type, n_classes=n_classes, loss_fn=loss_fn)
 
         start = time.time()
-        y_pred = evaluate(zc_proxy=zc_proxy, x_graphs=x, loader=train_loader)
+        y_pred = evaluate(zc_proxy=zc_proxy, x=x, loader=train_loader)
         end = time.time()
 
         # ====== evaluate regression performance ======

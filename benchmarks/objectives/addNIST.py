@@ -19,6 +19,7 @@ class AddNISTObjective(Objective):
     n_epochs = 64
     batch_size = 64
     optim_kwargs = {"lr": 0.01, "momentum": 0.9, "weight_decay": 3e-4}
+    num_classes = 20
 
     def __init__(
         self,
@@ -126,3 +127,12 @@ class AddNISTObjective(Objective):
                 "timestamp": end,
             },
         }
+
+    def get_train_loader(self):
+        train_loader, _, _ = get_train_val_test_loaders(
+            dataset=self.dataset,
+            data=self.data_path,
+            batch_size=self.batch_size,
+            eval_mode=self.eval_mode,
+        )
+        return train_loader

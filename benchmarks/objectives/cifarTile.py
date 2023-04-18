@@ -33,6 +33,7 @@ class CifarTileObjective(Objective):
     optim_kwargs = {"lr": 0.01, "momentum": 0.9, "weight_decay": 3e-4}
     n_epochs = 64
     workers = 2
+    num_classes = 4
 
     def __init__(
         self,
@@ -111,6 +112,14 @@ class CifarTileObjective(Objective):
             },
         }
 
+    def get_train_loader(self):
+        train_loader, _, _ = get_train_val_test_loaders(
+            dataset=self.dataset,
+            data=self.data_path,
+            batch_size=self.batch_size,
+            eval_mode=self.eval_mode,
+        )
+        return train_loader
 
 if __name__ == "__main__":
     import argparse
@@ -118,7 +127,7 @@ if __name__ == "__main__":
     # pylint: disable=ungrouped-imports
     from neps.search_spaces.search_space import SearchSpace
 
-    from hierarchical_nas_benchmarks.search_spaces.hierarchical_nb201.graph import (
+    from benchmarks.search_spaces.hierarchical_nb201.graph import (
         NB201Spaces,
     )
 

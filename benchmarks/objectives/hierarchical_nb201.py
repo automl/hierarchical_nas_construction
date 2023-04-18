@@ -441,6 +441,15 @@ class NB201Pipeline(Objective):
 
         self.is_fidelity = is_fidelity
 
+        if self.dataset == "cifar10":
+            self.num_classes = 10
+        elif self.dataset == "cifar100":
+            self.num_classes = 100
+        elif self.dataset == "ImageNet16-120":
+            self.num_classes = 120
+        else:
+            raise NotImplementedError
+
     def __call__(self, working_directory, previous_working_directory, architecture, **hp):
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
@@ -500,6 +509,8 @@ class NB201Pipeline(Objective):
             val_err = 1
         else:
             val_err = 1 - out_dict["x-valid_1"] / 100
+
+        nof_parameters = sum(p.numel() for p in model.parameters())
         results = {
             "loss": self.transform(val_err),
             "info_dict": {
@@ -507,6 +518,7 @@ class NB201Pipeline(Objective):
                 **{
                     "train_time": end - start,
                     "timestamp": end,
+                    "number_of_parameters": nof_parameters,
                 },
             },
         }
@@ -519,6 +531,17 @@ class NB201Pipeline(Objective):
 
         return results
 
+    def get_train_loader(self):
+        _, train_loader, _ = get_dataloaders(
+            self.dataset,
+            self.data_path,
+            epochs=self.n_epochs,
+            gradient_accumulations=1,
+            workers=self.workers,
+            use_trivial_augment=False,
+            eval_mode=self.eval_mode,
+        )
+        return train_loader
 
 if __name__ == "__main__":
     import argparse

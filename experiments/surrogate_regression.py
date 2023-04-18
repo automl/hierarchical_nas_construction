@@ -22,6 +22,7 @@ from neps.optimizers.bayesian_optimization.models.gp_hierarchy import (
     ComprehensiveGPHierarchy,
 )
 from neps.search_spaces.search_space import SearchSpace
+from neps.search_spaces.graph_grammar.primitives import AbstractPrimitive
 from scipy import stats
 
 ConfigResult = collections.namedtuple("ConfigResult", ["config", "result"])
@@ -109,8 +110,8 @@ parser.add_argument(
 )
 parser.add_argument(
     "--surrogate_model",
-    default="gp_hierarchical",
-    choices=["gp", "gp_hierarchical"],
+    default="gpwl_hierarchical",
+    choices=["gpwl", "gpwl_hierarchical", "gp_nasbot"],
 )
 parser.add_argument("--n_train", type=int, default=100)
 parser.add_argument(
@@ -147,7 +148,7 @@ if not args.DEBUG:
 idx = args.search_space.find("_")
 dataset = args.objective[args.objective.find("_") + 1 :]
 search_space = SearchSpaceMapping[args.search_space[:idx]](
-    space=args.search_space[idx + 1 :], dataset=dataset,
+    space=args.search_space[idx + 1 :], dataset=dataset
 )
 search_space = SearchSpace(**{"architecture": search_space})
 
@@ -165,7 +166,7 @@ for seed in args.seeds:
     # assert n_train + 500 <= len(configs)
     train_indices = indices[:n_train]
     if args.rs_only:
-        test_indices = indices[-100:]  # stable 500 config test set
+        test_indices = indices[-100:]  # stable 100 config test set
     else:
         test_indices = indices[-500:]  # stable 500 config test set
     x_train, y_train = [], []
@@ -180,8 +181,10 @@ for seed in args.seeds:
         copied_search_space.load_from(configs[idx])
         x_test.append(copied_search_space)
         y_test.append(y[idx])
+        if args.DEBUG and test_indices[25] == idx:
+            break
 
-    if args.surrogate_model == "gp_hierarchical":
+    if args.surrogate_model == "gpwl_hierarchical":
         hierarchy_considered = hierarchies_considered_in_search_space[args.search_space]
         graph_kernels = ["wl"] * (len(hierarchy_considered) + 1)
         wl_h = [2, 1] + [2] * len(hierarchy_considered)
@@ -202,7 +205,7 @@ for seed in args.seeds:
             "d_graph_features": 0,
             "vectorial_features": None,
         }
-    elif args.surrogate_model == "gp":
+    elif args.surrogate_model == "gpwl":
         hierarchy_considered = []
         graph_kernels = ["wl"]
         wl_h = [2]
@@ -211,6 +214,25 @@ for seed in args.seeds:
                 h=wl_h[j],
                 oa=False,
                 se_kernel=None,
+            )
+            for j, kernel in enumerate(graph_kernels)
+        ]
+        surrogate_model = ComprehensiveGPHierarchy
+        surrogate_model_args = {
+            "graph_kernels": graph_kernels,
+            "hp_kernels": [],
+            "verbose": False,
+            "hierarchy_consider": hierarchy_considered,
+            "d_graph_features": 0,
+            "vectorial_features": None,
+        }
+    elif args.surrogate_model == "gp_nasbot":
+        hierarchy_considered = []
+        graph_kernels = ["otmann"]
+        op_list = [k for k, v in search_space.hyperparameters["architecture"].terminal_to_op_names.items() if isinstance(v, AbstractPrimitive) or (isinstance(v, dict) and "op" in v)]
+        graph_kernels = [
+            GraphKernelMapping[kernel](
+                op_list=op_list,
             )
             for j, kernel in enumerate(graph_kernels)
         ]

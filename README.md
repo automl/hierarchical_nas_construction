@@ -50,9 +50,40 @@ where `$working_directory` and `$data_path` are the directory you want to save t
 |--------------------------|-------------------------------------------------------------------|
 | `search_space`         | `nb201_variable_multi_multi` (hierarchical) or `nb201_fixed_1_none` (cell-based)     |
 | `objective` | `nb201_cifar10`, `nb201_cifar100`, `nb201_ImageNet16-120`, `nb201_cifarTile`, or `nb201_addNIST`   |
-| `searcher`      | `bayesian_optimization`, `random search`, or `regularized_evolution`     |
-| `surrogate_model`       | `gp_hierarchical` (hWL) or `gp` (WL) (only active if `searcher` is set to `bayesian_optimization`) |
+| `searcher`      | `bayesian_optimization`, `random search`, `regularized_evolution`, or `àssisted_regularized_evolution`     |
+| `surrogate_model`       | `gpwl_hierarchical` (hWL), `gpwl` ([WL](https://openreview.net/forum?id=j9Rv7qdXjd)), or `gp_nasbot` ([NASBOT](https://proceedings.neurips.cc/paper/2018/hash/f33ba15effa5c10e873bf3842afb46a6-Abstract.html)) (only active if `searcher` is set to `bayesian_optimization`) |
 | `seed`      | `777`, `888`, `999`                     |
+
+To run DARTS (or improved versions of DARTS) on the cell-based NAS-Bench-201 search space, run
+```bash
+python darts_train_search.py \
+    --working_directory $working_directory \
+    --data_path $data_path \
+    --objective $objective \
+    --seed $seed \
+    --method $method
+```
+where `working_directory` and `data_path` are the directory you want to save to or the path to the dataset, respectively. The other variables can be set as follows:
+| variable          | options                                                       |
+|--------------------------|-------------------------------------------------------------------|
+| `objective` | `nb201_cifar10`, `nb201_cifar100`, `nb201_ImageNet16-120`, `nb201_cifarTile`, or `nb201_addNIST`   |
+| `seed`      | `777`, `888`, `999`                     |
+| `method`      | `darts`, `dirichlet`                     |
+Note that add the `--progressive` flag to the above command to run DrNAS with progressive learning scheme.
+
+To evaluate the found architectures, run
+```bash
+python $WORKDIR/hierarchical_nas_experiments/darts_evaluate.py \
+--working_directory $working_directory \
+--data_path $data_path \
+--objective $objective
+```
+where `working_directory` and `data_path` are the directory you saved the data to or the path to the dataset, respectively. The other variable can be set as follows:
+| variable          | options                                                       |
+|--------------------------|-------------------------------------------------------------------|
+| `objective` | `nb201_cifar10`, `nb201_cifar100`, `nb201_ImageNet16-120`, `nb201_cifarTile`, or `nb201_addNIST`   |
+
+Note that DARTS (or improved versions of it) cannot be applied with further adoption to our hierarchical NAS-Bench-201 search space due to the exponential number of parameters that the supernet would contain.
 
 ### 2.2 Search on the activation function search space
 To reproduce this search experiment, run
@@ -78,7 +109,7 @@ The other variables can be set as follows:
 | variable          | options                                                       |
 |--------------------------|-------------------------------------------------------------------|
 | `searcher`      | `bayesian_optimization`, `random search`, or `regularized_evolution`     |
-| `surrogate_model`       | `gp_hierarchical` (hWL) or `gp` (WL) (only active if `searcher` is set to `bayesian_optimization`) |
+| `surrogate_model`       | `gpwl_hierarchical` (hWL), `gpwl` ([WL](https://openreview.net/forum?id=j9Rv7qdXjd)), or `gp_nasbot` ([NASBOT](https://proceedings.neurips.cc/paper/2018/hash/f33ba15effa5c10e873bf3842afb46a6-Abstract.html)) (only active if `searcher` is set to `bayesian_optimization`) |
 | `seed`      | `777`, `888`, `999` (note that we only ran on the seed `777` in our experiments)                    |
 
 ### 2.3 Surrogate experiments
@@ -100,7 +131,7 @@ where `$working_directory` is the directory where the data from the search runs 
 |--------------------------|-------------------------------------------------------------------|
 | `search_space`         | `nb201_variable_multi_multi` (hierarchical) or `nb201_fixed_1_none` (cell-based)     |
 | `objective` | `nb201_cifar10`, `nb201_cifar100`, `nb201_ImageNet16-120`, `nb201_cifarTile`, or `nb201_addNIST`   |
-| `surrogate_model`       | `gp_hierarchical` (hWL) or `gp` (WL) (only active if `searcher` is set to `bayesian_optimization`) |
+| `surrogate_model`       | `gpwl_hierarchical` (hWL), `gpwl` ([WL](https://openreview.net/forum?id=j9Rv7qdXjd)), or `nasbot` ([NASBOT](https://proceedings.neurips.cc/paper/2018/hash/f33ba15effa5c10e873bf3842afb46a6-Abstract.html)) (only active if `searcher` is set to `bayesian_optimization`) |
 | `n_train`      | `10`, `25`, `50`, `75`, `100`, `150`, `200`, `300`, or `400`                     |
 
 ### 2.4 Zero-cost proxy experiments
@@ -141,6 +172,8 @@ where `$working_directory` and `$data_path` are the directory you want to save t
 | `objective` | `nb201_cifar10`, `nb201_cifar100`, `nb201_ImageNet16-120`, `nb201_cifarTile`, or `nb201_addNIST`   |
 | `seed`      | `777`, `888`, `999`                     |
 
+### 2.6 DARTS search experiment
+
 ## 3. Citing
 If you would like to learn more about our work, please read our [paper](https://arxiv.org/abs/2211.01842).
 If you find our approach interesting for your own work, please cite the paper:
@@ -156,3 +189,11 @@ If you find our approach interesting for your own work, please cite the paper:
   copyright = {arXiv.org perpetual, non-exclusive license}
 }
 ```
+## 4. Acknowledgements
+We thank the authors of following works for open sourcing their code:
+- [NAS-BOWL](https://github.com/xingchenwan/nasbowl): GPWL surrogate model base implementation, NASBOT's graph encoding scheme
+- [NASLib](https://github.com/automl/NASLib): base graph class, zero-cost proxies
+- [NAS-Bench-201](https://github.com/D-X-Y/AutoDL-Projects): training protocols of NAS-Bench-201 search space
+- [CVPR-NAS 2021 Competition Track 3](https://github.com/RobGeada/cvpr-nas-datasets): dataset generation and training protocols for AddNIST and CIFARTile
+- [NASWOT](https://github.com/BayesWatch/nas-without-training): implementation of zero-cost proxy search
+- [DARTS](https://github.com/quark0/darts), [DrNAS](https://github.com/xiangning-chen/DrNAS): implementation of DARTS training pipeline and DARTS (+ improved versions) search algorithms

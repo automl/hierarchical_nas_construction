@@ -23,7 +23,7 @@ from neps.search_spaces.search_space import SearchSpace
 from path import Path
 from tqdm import trange
 
-from experiments.zero_cost_proxies import ZeroCost, evaluate
+from experiments.zero_cost_rank_correlation import ZeroCost, evaluate
 
 SearchSpaceMapping = {
     "nb201": NB201Spaces,
