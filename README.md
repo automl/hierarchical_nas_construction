@@ -1,10 +1,21 @@
-# Towards Discovering Neural Architectures from Scratch
+# Construction of Hierarchical Neural Architecture Search Spaces based on Context-free Grammars
 
 **Note that this repository only contains the implementation of the search spaces, evaluation pipelines, and experiment scripts. The main implementation (e.g., how to construct architectures etc.) of our approach is implemented as part of the [NePS](https://github.com/automl/neps) project.**
 
-This repository contains the implementation of our paper "Towards Discovering Neural Architectures from Scratch",
-that treats neural architectures as algebraic terms and implements the construction mechanism of algebraic terms with context-free grammars.
-For more details, please refer to [our paper](https://arxiv.org/abs/2211.01842).
+This repository contains the implementation of the experiments of our NeurIPS 2023 paper "Construction of Hierarchical Neural Architecture Search Spaces based on Context-free Grammars" that takes a functional view on neural architecture search by constructing architectures based on context-free grammars.
+
+If you would like to learn more about our work, please refer to our [paper](https://arxiv.org/abs/2211.01842).
+If you find our approach interesting for your own work, please cite the paper:
+```
+@inproceedings{schrodi2023construction,
+    title={Construction of Hierarchical Neural Architecture Search Spaces based on Context-free Grammars},
+    author={Schrodi, Simon and Stoll, Danny and Ru, Binxin and Sukthanker, Rhea and Brox, Thomas and Hutter, Frank},
+    booktitle={Advances in Neural Information Processing Systems},
+    year={2023},
+}
+```
+
+A [short form of this work](https://openreview.net/forum?id=Ok58hMNXIQ) was also previously presented in the NeurIPS2022 Meta-Learning Workshop with the title "Towards Discovering Neural Architectures from Scratch".
 
 ## 1. Installation
 1. Clone this repository.
@@ -177,22 +188,14 @@ where `$working_directory` and `$data_path` are the directory you want to save t
 
 ### 2.6 DARTS search experiment
 
-## 3. Citing
-If you would like to learn more about our work, please read our [paper](https://arxiv.org/abs/2211.01842).
-If you find our approach interesting for your own work, please cite the paper:
-```
-@misc{Schrodi_Towards_Discovering_Neural_2022,
-  doi = {10.48550/ARXIV.2211.01842},
-  url = {https://arxiv.org/abs/2211.01842},
-  author = {Schrodi, Simon and Stoll, Danny and Ru, Binxin and Sukthanker, Rhea and Brox, Thomas and Hutter, Frank},
-  keywords = {Machine Learning (cs.LG), Artificial Intelligence (cs.AI), Computer Vision and Pattern Recognition (cs.CV), Machine Learning (stat.ML), FOS: Computer and information sciences, FOS: Computer and information sciences},
-  title = {Towards Discovering Neural Architectures from Scratch},
-  publisher = {arXiv},
-  year = {2022},
-  copyright = {arXiv.org perpetual, non-exclusive license}
-}
-```
-## 4. Acknowledgements
+**Code is coming soon**
+
+
+### 2.7 Transformer search experiment
+
+**Code is coming soon**
+
+## 3. Acknowledgements
 We thank the authors of following works for open sourcing their code:
 - [NAS-BOWL](https://github.com/xingchenwan/nasbowl): GPWL surrogate model base implementation, NASBOT's graph encoding scheme
 - [NASLib](https://github.com/automl/NASLib): base graph class, zero-cost proxies
